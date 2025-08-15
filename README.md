@@ -1,5 +1,7 @@
 ## NILOR Node Editor (React Flow)
 
+![High-level diagram](./assets/diagram.png)
+
 A lightweight, themeable node-graph mockup for quickly building polished diagrams and slides. Built with Vite + React + TypeScript and React Flow.
 
 ### 1) Prerequisites
@@ -22,6 +24,8 @@ Open the URL shown in the terminal (usually `http://localhost:5173`).
 - A toolbar (top-left) with buttons to add new nodes
 - A minimap and pan/zoom controls
 - An Inspector (top-right) appears when you click a node
+
+![Editor screenshot](./assets/screenshot.png)
 
 ### 4) Basic usage
 

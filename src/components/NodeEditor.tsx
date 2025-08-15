@@ -109,89 +109,98 @@ const nodeTypes = { nilor: NilorNode };
 export default function NodeEditor() {
   const initialNodes = useMemo<RFNode<NilorData>[]>(
     () => [
-    {
-      id: "agentic",
-        type: "nilor",
-        position: { x: 40, y: 80 },
+      {
+        id: 'in1',
+        type: 'nilor',
+        position: { x: 100, y: 120 },
         data: {
-      title: "Agentic Framework",
-      accentColor: "#9B59B6",
-      inputs: [],
-      outputs: [
-            { id: "ai_orchestration", label: "AI Orchestration", color: "#9B59B6" },
-            { id: "workflows", label: "Intelligent Workflows", color: "#C39BD3" },
-          ],
-        },
-    },
-    {
-      id: "editor",
-        type: "nilor",
-        position: { x: 40, y: 260 },
-        data: {
-      title: "Node-Based Editor",
-      accentColor: "#F39C12",
-      inputs: [],
-      outputs: [
-            { id: "visual_prog", label: "Visual Programming", color: "#F39C12" },
-            { id: "comfy_touch", label: "ComfyUI + TouchDesigner", color: "#F7DC6F" },
+          title: 'Input A',
+          accentColor: '#10B981',
+          inputs: [],
+          outputs: [
+            { id: 'out', label: 'Output' },
           ],
         },
       },
       {
-        id: "core",
-        type: "nilor",
-        position: { x: 520, y: 140 },
+        id: 'in2',
+        type: 'nilor',
+        position: { x: 100, y: 260 },
         data: {
-          title: "NILOR CORE",
-          subtitle: "AI-Native Engine",
-          accentColor: "#10B981",
+          title: 'Input B',
+          accentColor: '#F39C12',
+          inputs: [],
+          outputs: [
+            { id: 'to-process', label: 'To Process' },
+            { id: 'to-output', label: 'To Output' },
+          ],
+        },
+      },
+      {
+        id: 'proc',
+        type: 'nilor',
+        position: { x: 420, y: 180 },
+        data: {
+          title: 'Process',
+          accentColor: '#4A90E2',
           inputs: [
-            { id: "ai_orchestration_in", label: "AI Orchestration", color: "#9B59B6" },
-            { id: "workflows_in", label: "Workflows", color: "#C39BD3" },
-            { id: "visual_prog_in", label: "Visual Programming", color: "#F39C12" },
-            { id: "comfy_touch_in", label: "ComfyUI + Touch", color: "#F7DC6F" },
+            { id: 'in1', label: 'Input 1', color: '#10B981' },
+            { id: 'in2', label: 'Input 2', color: '#F39C12' },
           ],
           outputs: [
-            { id: "ai_creation_out", label: "AI Creation", color: "#27AE60" },
-            { id: "procedural_out", label: "Procedural", color: "#58D68D" },
-            { id: "render_out", label: "Real-time Render", color: "#4A90E2" },
-            { id: "performance_out", label: "Performance", color: "#6BB6FF" },
+            { id: 'out', label: 'Output' },
           ],
         },
       },
-    {
-      id: "content",
-        type: "nilor",
-        position: { x: 950, y: 80 },
+      {
+        id: 'out',
+        type: 'nilor',
+        position: { x: 740, y: 180 },
         data: {
-      title: "Content Generation",
-      accentColor: "#27AE60",
-      inputs: [
-            { id: "ai_creation_in", label: "AI Creation Input", color: "#27AE60" },
-            { id: "procedural_in", label: "Procedural Input", color: "#58D68D" },
-      ],
-      outputs: [],
+          title: 'Output',
+          accentColor: '#9B59B6',
+          inputs: [
+            { id: 'in', label: 'Input', color: '#4A90E2' },
+          ],
+          outputs: [],
         },
-    },
-    {
-      id: "playback",
-        type: "nilor",
-        position: { x: 950, y: 260 },
-        data: {
-      title: "Playback Engine",
-      accentColor: "#4A90E2",
-      inputs: [
-            { id: "render_in", label: "Render Input", color: "#4A90E2" },
-            { id: "performance_in", label: "Performance Input", color: "#6BB6FF" },
-      ],
-      outputs: [],
-    },
       },
     ],
-    []
+    [],
   );
 
-  const initialEdges = useMemo<RFEdge[]>(() => [], []);
+  const initialEdges = useMemo<RFEdge[]>(
+    () => [
+      {
+        id: 'e-in1-proc',
+        source: 'in1',
+        sourceHandle: 'out-out',
+        target: 'proc',
+        targetHandle: 'in-in1',
+        type: 'bezier',
+        style: { stroke: '#10B981', strokeWidth: 2.5 },
+      },
+      {
+        id: 'e-in2-proc',
+        source: 'in2',
+        sourceHandle: 'out-to-process',
+        target: 'proc',
+        targetHandle: 'in-in2',
+        type: 'bezier',
+        style: { stroke: '#F39C12', strokeWidth: 2.5 },
+      },
+      {
+        id: 'e-in2-out',
+        source: 'in2',
+        sourceHandle: 'out-to-output',
+        target: 'out',
+        targetHandle: 'in-in',
+        type: 'bezier',
+        style: { stroke: '#F39C12', strokeWidth: 2.5 },
+      },
+    ],
+    [],
+  );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
